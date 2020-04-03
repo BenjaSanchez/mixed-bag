@@ -106,22 +106,36 @@ Requirements:
     ```bash
     make setup
     ```
-  - Create in root a `.env` file with a different port than warehouse, e.g.:
-    ```bash
-    API_PORT=8001
-    ```
-  - Can be visualized at http://localhost:8001/ (check docker-compose.yml)
-  - Create in caffeine's root a `.env.local` file with over-rides to the API ports, e.g.:
-    ```bash
-    VUE_APP_SIMULATIONS_API=http://localhost:8001/
-    VUE_APP_WAREHOUSE_API=http://localhost:8000/
-    ```
 
 * for qa:
   ```bash
   make flake8 isort black-check test
   ```
+  or without make in an anaconda prompt:
+  ```bash
+  flake8 src tests
+  isort --check-only --recursive src tests
+  black --check src tests
+  ```
   (skip license as it fails in windows)
+
+* for running:
+  - Create in root a `.env` file with a different port than warehouse, e.g.:
+    ```bash
+    API_PORT=8001
+    ```
+  - cmd from simulation's root:
+    ```bash
+    docker-compose up
+    ```
+  - Can be visualized at http://localhost:8001/
+  - Create in caffeine's root a `.env.local` file with over-rides to the API ports, e.g.:
+    ```bash
+    VUE_APP_SIMULATIONS_API=http://localhost:8001/
+    VUE_APP_WAREHOUSE_API=http://localhost:8000/
+    ```
+  - run caffeine-vue
+
 
 * for running:
 
