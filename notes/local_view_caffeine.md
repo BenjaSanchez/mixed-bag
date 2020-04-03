@@ -157,7 +157,29 @@ Requirements:
       ```
   - Error 127: You'll have to skip make and directly use the docker commands from `Makefile`
 
-* for running:
+### escher
+
+* installation:
+  - clone https://github.com/dd-decaf/escher
+  - cmd from escher's root:
+    ```bash
+    npm install
+    npm audit fix
+    ```
+
+* using a different build in caffeine:
+  - checkout desired branch of escher
+  - cmd from escher's root:
+    ```bash
+    npm run-script build
+    ```
+  - copy all files in `/dist` to caffeine's repo: `/caffeine/node_modules/@dd-decaf/escher/dist`
+
+* resetting caffeine's version of escher:
+  - cmd from caffeine's root:
+    ```bash
+    npm install
+    ```
 
   ```bash
   docker-compose up
