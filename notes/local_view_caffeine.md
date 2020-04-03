@@ -136,6 +136,26 @@ Requirements:
     ```
   - run caffeine-vue
 
+* troubleshooting:
+  - if you get an error of the type "Cannot create container for service web: b'Drive has not been shared'":
+    - try https://github.com/Cyb3rWard0g/HELK/issues/79#issuecomment-397637262
+    - If that doesn't work, in `/docker-compose.yml` replace:
+      ```yml
+      - prometheus_multiproc_dir=/prometheus-client
+      volumes:
+        - .:/app
+        - type: tmpfs
+        - target: "/prometheus-client"
+      ```
+      for:
+      ```yml
+        - prometheus_multiproc_dir=/
+      ```
+    - note that if you do this, every time you use `make` you first need to run:
+      ```bash
+      docker-compose build web
+      ```
+  - Error 127: You'll have to skip make and directly use the docker commands from `Makefile`
 
 * for running:
 
