@@ -181,6 +181,18 @@ Requirements:
     npm install
     ```
 
+### Accessing passwords
+
+* cmd:
   ```bash
-  docker-compose up
+  gcloud compute ssh projects/dd-decaf-cfbf6/zones/europe-west1-b/instances/amoeba
+  ```
+* Create file `.ssh/config` with:
+  ```bash
+  Host git.dd-decaf.eu
+   IdentityFile ~/.ssh/google_compute_engine
+  ```
+* cmd:
+  ```bash
+  git clone git.dd-decaf.eu:/secrets
   ```
