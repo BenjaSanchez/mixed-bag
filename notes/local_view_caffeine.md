@@ -196,3 +196,86 @@ Requirements:
   ```bash
   git clone git.dd-decaf.eu:/secrets
   ```
+
+### Using the API
+
+* Accessing public data:
+  - Any service can be accessed at https://api-staging.dd-decaf.eu
+  - Example: models are available at https://api-staging.dd-decaf.eu/model-storage/models
+
+* Changing databases (recommended way):
+  - Go to https://console.cloud.google.com
+  - From their CLI, run:
+    ```
+    gcloud sql connect dd-decaf
+    ```
+    (you will need the `GCloud postgres user` password from the lastpass vault)
+  - To access a given database:
+    ```
+    \l # show all databases
+    \c model_storage_staging # connect to this model db
+    \dt # list all tables from the database
+    ```
+  - To modify an element of the database:
+    ```
+    select * from model where id=144;
+    update model set project_id=NULL where id=44;
+    ```
+  - To delete an element of the database:
+    ```
+    delete from model where id=44;
+    ```
+  - hot-keys:
+    `;` -> show display
+    `q` -> quit display
+
+Other Stuff (Untested):
+
+* Activating proxy:
+   ```
+   cloud_sql_proxy -instances dd-decaf-cfbf6:europe-west1:dd-decaf=tcp:0.0.0.0:3306
+   ```
+
+* Accessing PostgreSQL locally:
+  - Install: https://www.compose.com/articles/postgresql-tips-installing-the-postgresql-client/
+  - From a shell (using the `GCloud postgres user` password from the lastpass vault), run:
+    ```
+    gcloud sql connect dd-decaf
+    ```
+
+* Having docker work within Windows' Ubuntu: https://altis.com.au/installing-docker-on-ubuntu-bash-for-windows/
+
+* Install gcloud: https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test
+
+* IPython approach for updating models (untested):
+  - Clone the micro-service of interest
+  - In root, create a `.env` file with:
+    ```
+    POSTGRES_HOST=172.19.0.1
+    POSTGRES_PORT=3306
+    POSTGRES_DB_NAME=...
+    POSTGRES_USERNAME=...
+    POSTGRES_PASS=...
+    ```
+    - `POSTGRES_HOST`: From the shell, run the following to confirm the Gateway IP:
+      ```
+      docker network ls
+      docker network inspect DD-DeCaF
+      ```
+      (or similarly named)
+    - `POSTGRES_DB_NAME`: Find it from a psql shell (run the `\l` command).
+    - `POSTGRES_USERNAME/PASS`: Available at lastpass (`GCloud postgres user`)
+  - In a linux terminal (use ubuntu for Windows if in Windows):
+    ```bash
+    cd /mnt/c/.../model-storage
+    make pip-compile build
+    docker-compose run --rm ipython
+    ```
+  - In ipython:
+    ```python
+    from model_storage.app import *
+    from model_storage.models import *
+    init_app(app, db)
+    app.app_context().push()
+    Model.query.count()
+    ```
