@@ -46,10 +46,16 @@ These are the steps I followed for having some of the [DeCaF](https://github.com
 
 ## Running services locally
 
+Requirements:
+
+* admin access
+* Docker desktop: https://www.docker.com/products/docker-desktop
+* make: https://coderefinery.github.io/installation/make/
+
 ### warehouse
 
 * installation:
-  - open docker for windows
+  - open docker
   - clone locally repo
   - cmd:
     ```bash
@@ -64,7 +70,7 @@ These are the steps I followed for having some of the [DeCaF](https://github.com
     ```
 
 * for running:
-  - open docker for windows
+  - open docker
   - cmd:
     ```bash
     cd /warehouse
@@ -80,14 +86,24 @@ These are the steps I followed for having some of the [DeCaF](https://github.com
 ### simulations
 
 * installation:
-  - install make: https://coderefinery.github.io/installation/make/
-  - install Google cloud SDK: https://cloud.google.com/sdk/docs/
+  - install Google cloud SDK: https://cloud.google.com/sdk/docs/ (also gcloud)
+  - add `C:\Users\user_name\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin` to the env path
   - make sure your gmail account is added to the list of verified emails with access to the container registry (ATM [@kvikshaug](https://github.com/kvikshaug) is in charge)
-  - autenthicate to the container registry: https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud_docker
-  - clone locally repo
-  - cmd:
+  - autenthicate to the container registry:
     ```bash
-    cd /simulations
+    gcloud auth login
+    gcloud config set project dd-decaf-cfbf6
+    gcloud auth configure-docker
+    ```
+  - Details of the project:
+    ```
+    gcloud compute project-info add-metadata --metadata google-compute-default-region=europe-west1,google-compute-default-zone=europe-west1-b
+    ```
+  - open docker
+  - Switch to linux containers: https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers
+  - clone locally repo
+  - cmd from simulations' root:
+    ```bash
     make setup
     ```
   - Create in root a `.env` file with a different port than warehouse, e.g.:
