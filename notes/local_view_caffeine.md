@@ -4,11 +4,12 @@ These are the steps I followed for having some of the [DeCaF](https://github.com
 
 ## Running caffeine-vue locally
 
+* Requirements:
+  - nodeJS
+
 * installation:
-  * Install nodeJS
-  * Install docker
-  * Clone caffeine-vue locally
-  * go to cmd:
+  - Clone caffeine-vue locally
+  - cmd:
     ```bash
     cd /caffeine-vue
     npm install
