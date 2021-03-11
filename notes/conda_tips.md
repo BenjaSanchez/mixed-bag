@@ -4,6 +4,9 @@ Anything related to environments, dependencies, etc.
 
 ## Managing environments with anaconda
 
+* Create environment:
+  `conda create -n env_name python=3.7`
+
 * Switch to environment in anaconda terminal:
   `conda activate env_name`
 

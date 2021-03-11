@@ -201,7 +201,14 @@ Requirements:
 
 * Accessing public data:
   - Any service can be accessed at https://api-staging.dd-decaf.eu
-  - Example: models are available at https://api-staging.dd-decaf.eu/model-storage/models
+  - Example: public models are available at https://api-staging.dd-decaf.eu/model-storage/models
+
+* Checking private data:
+  - Make sure cisco is not enabled.
+  - Go to the corresponding model/map/exp page (in staging or caffeine)
+  - Open the Vue tab in the developers tool
+  - Models: Inspect `props -> items` in `Root -> App -> VApp -> VContent -> Models -> VDataTable`
+  - Maps: Inspect `props -> items` in `Root -> App -> VApp -> VContent -> Maps -> VDataTable`
 
 * Changing databases (recommended way):
   - Go to https://console.cloud.google.com
@@ -213,17 +220,18 @@ Requirements:
   - To access a given database:
     ```
     \l # show all databases
-    \c model_storage_staging # connect to this model db
-    \dt # list all tables from the database
+    \c model_storage_staging # connect to this db
+    \dt # list all tables from the db
+    select * from model; # show all elements
     ```
-  - To modify an element of the database:
+  - To make a model public:
     ```
-    select * from model where id=144;
-    update model set project_id=NULL where id=44;
+    select * from model where id=XXX;
+    update model set project_id=NULL where id=XXX;
     ```
   - To delete an element of the database:
     ```
-    delete from model where id=44;
+    delete from model where id=XXX;
     ```
   - hot-keys:
     `;` -> show display
@@ -247,7 +255,7 @@ Other Stuff (Untested):
 
 * Install gcloud: https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test
 
-* IPython approach for updating models (untested):
+* IPython approach for updating models:
   - Clone the micro-service of interest
   - In root, create a `.env` file with:
     ```
